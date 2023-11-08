@@ -20,7 +20,7 @@ function operate(num1, num2, operator) {
             return add(num1, num2);
         case "-":
             return subtract(num1, num2);
-        case "*":
+        case "x":
             return multiply(num1, num2);
         case "/":
             return divide(num1, num2);
@@ -31,17 +31,36 @@ function operate(num1, num2, operator) {
 function manageClickEvent(event) {
     let target = event.target;
     let classArr = [...target.classList];
+    let value = target.textContent;
+    let display = document.querySelector(".display");
     if (classArr.includes("op") || classArr.includes("num")) {
-        let display = document.querySelector(".display");
-        display.textContent += target.textContent;
+        if (newExp && +value) {
+            displayValue = value;
+            newExp = false;
+        } else {
+            displayValue += value;
+        }
     }
+
+    if (target.id === "equals") {
+        let arr = displayValue.split(" ");
+        console.log(arr);
+        if (arr.length === 3) {
+            num1 = +arr[0];
+            operator = arr[1];
+            num2 = +arr[2];
+            displayValue = `${operate(num1, num2, operator)}`;
+
+        }
+    }
+    display.textContent = displayValue;
 }
 
-let num1 = null;
+let num1 = 0;
 let num2 = null;
 let operator = null;
 let displayValue = "0";
-let buttons = document.querySelectorAll("button");
-buttons.forEach(button => {
-    button.addEventListener('click', manageClickEvent);
-})
+let newExp = true;
+let keypad = document.querySelector(".keypad");
+keypad.addEventListener('click', manageClickEvent);
+
