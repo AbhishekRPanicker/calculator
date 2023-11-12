@@ -30,55 +30,78 @@ function operate(num1, num2, operator) {
 
 function manageClickEvent(event) {
     let target = event.target;
-    let classArr = [...target.classList];
-    let value = target.textContent;
+    const classArr = [...target.classList];
+    let targetValue = target.textContent;
     let display = document.querySelector(".display");
-    let valueArr = displayValue.split(" ").filter(value => value!=="");
+    const valueArr = display.textContent.split(" ").filter(element => element !== "");
     let isOp = classArr.includes("op");
     let isNum = classArr.includes("num");
-    operatorCount += (isOp) ? 1 : 0;    
+    operatorCount += (isOp) ? 1 : 0;
 
-    if (isOp && Number.isNaN(+valueArr[valueArr.length-1])){
+    if (isOp && Number.isNaN(+valueArr[valueArr.length - 1])) {
+        return;
+    }
+    if (targetValue === "." && valueArr[valueArr.length - 1].includes(".")) {
         return;
     }
 
     if (target.id === "equals" || (operatorCount > 1)) {
         operatorCount -= 1;
         if (valueArr.length >= 3) {
-            num1 = +valueArr[0];
-            operator = valueArr[1];
-            num2 = +valueArr[2];
-            let result = operate(num1, num2, operator);
+            let result = operate(+valueArr[0], +valueArr[2], valueArr[1]);
             valueArr.splice(0, 3, result);
-            displayValue = valueArr.join(" ");
-            num1 = result;
-            operator = null;
-            num2 = null;
+            display.textContent = valueArr.join(" ");
             newExp = (target.id === "equals") ? true : false;
 
         }
     }
 
     if (isOp || isNum) {
-        if (newExp && +value) {
-            displayValue = value;
+        if (newExp && +targetValue) {
+            display.textContent = targetValue;
             newExp = false;
-        } else if (newExp && value === "0") {
-            displayValue = value;
+        } else if (newExp && targetValue === "0") {
+            display.textContent = targetValue;
         } else {
-            displayValue += value;
+            display.textContent += targetValue;
             newExp = false;
         }
     }
 
-    display.textContent = displayValue;
+    switch (target.id) {
+        case "clear":
+            display.textContent = "0";
+            newExp = true;
+            errorDisplayed = false;
+            operatorCount = 0;
+            break;
+        case "backspace":
+            if (!errorDisplayed && !newExp) {
+                let content = display.textContent;
+                if (content.length === 1) {
+                    display.textContent = "0";
+                    newExp = true;
+                    errorDisplayed = false;
+                    operatorCount = 0;
+                }
+                else if (content[content.length - 1] === " ")
+                    display.textContent = content.slice(0, -3);
+                else
+                    display.textContent = content.slice(0, -1);
+            }
+            break;
+
+        case "percent":
+            if (valueArr.length === 1 && !Number.isNaN(+valueArr[0]))
+                display.textContent = divide(+valueArr[0], 100);
+            break;
+    }
+
 }
 
-let num1 = 0;
-let num2 = null;
-let operator = null;
-let displayValue = "0";
+
 let newExp = true;
+let errorDisplayed = false;
 let operatorCount = 0; //number of operators currently in display
 let keypad = document.querySelector(".keypad");
 keypad.addEventListener('click', manageClickEvent);
