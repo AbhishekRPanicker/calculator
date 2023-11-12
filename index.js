@@ -33,26 +33,44 @@ function manageClickEvent(event) {
     let classArr = [...target.classList];
     let value = target.textContent;
     let display = document.querySelector(".display");
-    if (classArr.includes("op") || classArr.includes("num")) {
+    let valueArr = displayValue.split(" ").filter(value => value!=="");
+    let isOp = classArr.includes("op");
+    let isNum = classArr.includes("num");
+    operatorCount += (isOp) ? 1 : 0;    
+
+    if (isOp && Number.isNaN(+valueArr[valueArr.length-1])){
+        return;
+    }
+
+    if (target.id === "equals" || (operatorCount > 1)) {
+        operatorCount -= 1;
+        if (valueArr.length >= 3) {
+            num1 = +valueArr[0];
+            operator = valueArr[1];
+            num2 = +valueArr[2];
+            let result = operate(num1, num2, operator);
+            valueArr.splice(0, 3, result);
+            displayValue = valueArr.join(" ");
+            num1 = result;
+            operator = null;
+            num2 = null;
+            newExp = (target.id === "equals") ? true : false;
+
+        }
+    }
+
+    if (isOp || isNum) {
         if (newExp && +value) {
             displayValue = value;
             newExp = false;
+        } else if (newExp && value === "0") {
+            displayValue = value;
         } else {
             displayValue += value;
+            newExp = false;
         }
     }
 
-    if (target.id === "equals") {
-        let arr = displayValue.split(" ");
-        console.log(arr);
-        if (arr.length === 3) {
-            num1 = +arr[0];
-            operator = arr[1];
-            num2 = +arr[2];
-            displayValue = `${operate(num1, num2, operator)}`;
-
-        }
-    }
     display.textContent = displayValue;
 }
 
@@ -61,6 +79,7 @@ let num2 = null;
 let operator = null;
 let displayValue = "0";
 let newExp = true;
+let operatorCount = 0; //number of operators currently in display
 let keypad = document.querySelector(".keypad");
 keypad.addEventListener('click', manageClickEvent);
 
