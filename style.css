@@ -30,7 +30,8 @@ div {
   font-size: 36px;
   padding: 10px 20px;
   width: 320px;
-  height: 75px;
+  min-height: 75px;
+  height: fit-content;
   margin-top: 5px;
   margin-bottom: 10px;
   align-items: end;
@@ -38,6 +39,8 @@ div {
   text-align: left;
   background-color: #ffffff;
   color: #416d7d;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .keypad > div {
