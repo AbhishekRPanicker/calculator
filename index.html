@@ -4,39 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <script defer src="./index.js"></script>
-    <div class="display">0</div>
-    <div class="keypad">
-      <div>
-          <button id="clear">C</button>
-          <button id="backspace">B</button>
-          <button id="percent">%</button>
-          <button id="divide" class="op"> / </button>
-      </div>
-      <div>
-          <button class="num">7</button>
-          <button class="num">8</button>
-          <button class="num">9</button>
-          <button id="multiply" class="op"> x </button>
-      </div>
-      <div>
-          <button class="num">4</button>
-          <button class="num">5</button>
-          <button class="num">6</button>
-          <button id="subtract" class="op"> - </button>
-      </div>
-      <div>
-          <button class="num">1</button>
-          <button class="num">2</button>
-          <button class="num">3</button>
-          <button id="add" class="op"> + </button>
-      </div>
-      <div>
-          <button class="num">0</button>
-          <button class="num">.</button>
-          <button id="equals">=</button>
+    <div class="content">
+      <div class="display">0</div>
+      <div class="keypad">
+        <div>
+            <button class="action" id="clear">C</button>
+            <button class="action" id="backspace">B</button>
+            <button id="percent">%</button>
+            <button id="divide" class="op"> / </button>
+        </div>
+        <div>
+            <button class="num">7</button>
+            <button class="num">8</button>
+            <button class="num">9</button>
+            <button id="multiply" class="op"> x </button>
+        </div>
+        <div>
+            <button class="num">4</button>
+            <button class="num">5</button>
+            <button class="num">6</button>
+            <button id="subtract" class="op"> - </button>
+        </div>
+        <div>
+            <button class="num">1</button>
+            <button class="num">2</button>
+            <button class="num">3</button>
+            <button id="add" class="op"> + </button>
+        </div>
+        <div>
+            <button class="num">0</button>
+            <button class="num">.</button>
+            <button id="equals">=</button>
+        </div>
       </div>
     </div>
   </body>

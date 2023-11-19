@@ -1,0 +1,68 @@
+* {
+  border-radius: 12px;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dde9ee;
+}
+div {
+  display: flex;
+}
+
+.content,
+.display,
+.keypad {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  padding: 10px;
+  background-color: #416d7d;
+}
+
+.display {
+  font-size: 36px;
+  padding: 10px 20px;
+  width: 320px;
+  height: 75px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  align-items: end;
+  justify-content: end;
+  text-align: left;
+  background-color: #ffffff;
+  color: #416d7d;
+}
+
+.keypad > div {
+  width: 370px;
+}
+
+button {
+  padding: 10px;
+  height: 60px;
+  margin: 5px;
+  font-size: 26px;
+  flex: 1;
+  background-color: #cbabd4;
+  color: #416d7d;
+}
+
+button.action {
+  background-color: #d4b6ab;
+}
+
+button#equals {
+  flex: 2;
+  background-color: #b4d4ab;
+}
+
+button.num {
+  background-color: #abc9d4;
+}
