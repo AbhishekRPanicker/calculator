@@ -11,7 +11,11 @@ function multiply(x, y) {
 }
 
 function divide(x, y) {
-    return x / y;
+    if (y == 0) return "Can't divide by Zero";
+    result = x / y;
+    if (!Number.isInteger(result))
+        result = result.toFixed(5);
+    return result;
 }
 
 function operate(num1, num2, operator) {
@@ -49,10 +53,15 @@ function manageClickEvent(event) {
         operatorCount -= 1;
         if (valueArr.length >= 3) {
             let result = operate(+valueArr[0], +valueArr[2], valueArr[1]);
-            valueArr.splice(0, 3, result);
-            display.textContent = valueArr.join(" ");
-            newExp = (target.id === "equals") ? true : false;
-
+            if (Number.isNaN(+result)) {
+                display.textContent = result ? result : "0";
+                errorDisplayed = true;
+                newExp = true;
+            } else {
+                valueArr.splice(0, 3, result);
+                display.textContent = valueArr.join(" ");
+                newExp = (target.id === "equals") ? true : false;
+            }
         }
     }
 
@@ -63,6 +72,10 @@ function manageClickEvent(event) {
         } else if (newExp && targetValue === "0") {
             display.textContent = targetValue;
         } else {
+            if (errorDisplayed) {
+                display.textContent = "0";
+                errorDisplayed = false;
+            }
             display.textContent += targetValue;
             newExp = false;
         }
